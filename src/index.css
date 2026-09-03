@@ -1,0 +1,223 @@
+@import 'tailwindcss';
+
+/* ─────────────────────────────────────────────────────────────
+   Karigar D.I. Khan — design tokens
+   Palette is fixed by the brand spec. Everything else derives
+   from it: no ad-hoc hex values anywhere in the components.
+   ───────────────────────────────────────────────────────────── */
+@theme {
+  /* Brand */
+  --color-royal: #1e3a8a; /* trust, security — primary accent */
+  --color-royal-deep: #172554; /* headers, pressed states */
+  --color-royal-wash: #eef2ff; /* tinted fills behind royal text */
+  --color-amber: #f59e0b; /* prompt service — the action colour */
+  --color-amber-deep: #b45309; /* amber text on light fills (AA) */
+  --color-amber-wash: #fffbeb;
+
+  /* Surfaces */
+  --color-canvas: #f8fafc; /* app background */
+  --color-card: #ffffff;
+
+  /* Ink */
+  --color-ink: #0f172a; /* primary text */
+  --color-ink-soft: #475569; /* secondary text */
+  --color-ink-muted: #94a3b8; /* captions, placeholders */
+  --color-line: #e2e8f0; /* hairlines, borders */
+
+  /* Status */
+  --color-success: #10b981;
+  --color-success-wash: #ecfdf5;
+  --color-alert: #ef4444;
+  --color-alert-wash: #fef2f2;
+
+  /* Type */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-urdu: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+
+  /* Layout — the mobile shell */
+  --shell-max: 480px;
+  --nav-height: 68px;
+
+  --radius-card: 16px;
+  --radius-tile: 18px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Base
+   ───────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    /* cv11 gives Inter a single-storey 'l' — clearer at label sizes. */
+    font-feature-settings: 'cv11', 'ss01';
+    overscroll-behavior-y: none;
+  }
+
+  /* Money, wallet balances and ratings must not jitter as digits change. */
+  .tnum,
+  input[inputmode='numeric'],
+  input[type='tel'] {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+
+  /* Nastaliq sits on a deep baseline and needs far more leading than Latin.
+     Never set Urdu script without this class. */
+  .ur {
+    font-family: var(--font-urdu);
+    line-height: 2.1;
+    direction: rtl;
+    unicode-bidi: isolate;
+  }
+
+  button,
+  [role='button'] {
+    touch-action: manipulation;
+  }
+
+  /* Keyboard focus stays visible everywhere — the quality floor. */
+  :focus-visible {
+    outline: 2px solid var(--color-royal);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  ::placeholder {
+    color: var(--color-ink-muted);
+  }
+
+  /* Hide scrollbars on the horizontal carousels without killing scroll. */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Signature: the truck-art chevron ribbon.
+   A 3px strip derived from the painted border bands on Pakistani
+   trucks. Used in exactly two places — the emergency banner and
+   the CNIC-verified badge — and nowhere else.
+   ───────────────────────────────────────────────────────────── */
+@utility ribbon {
+  background-image: repeating-linear-gradient(
+    115deg,
+    color-mix(in srgb, white 92%, transparent) 0 5px,
+    transparent 5px 10px
+  );
+}
+
+/* Touch targets: the spec floor is 48px. */
+@utility tap {
+  min-height: 48px;
+  min-width: 48px;
+}
+
+@utility shell {
+  max-width: var(--shell-max);
+  margin-inline: auto;
+}
+
+/* Width and colour only — never the `border` shorthand. Preflight already
+   sets `border: 0 solid`, so leaving border-style alone is what lets
+   `card border-dashed` actually render dashed. */
+@utility card {
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  border-width: 1px;
+  border-color: var(--color-line);
+}
+
+/* Small letterspaced caps — the utility voice for English labels
+   sitting under a Roman-Urdu primary. */
+@utility eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Motion — a load stagger on the grid, a pulse while recording.
+   Both are switched off under prefers-reduced-motion.
+   ───────────────────────────────────────────────────────────── */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-alert) 45%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 18px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-rise {
+  animation: rise 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.animate-pulse-ring {
+  animation: pulse-ring 1.6s ease-out infinite;
+}
+.animate-sheet-up {
+  animation: sheet-up 0.26s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.animate-fade {
+  animation: fade 0.2s ease-out both;
+}
+
+.press {
+  transition: transform 0.12s ease;
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

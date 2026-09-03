@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#1E3A8A"/>
+  <!-- Truck-art chevron band: the same motif the app uses for verified badges. -->
+  <path d="M0 12 L64 12 L64 16 L0 16 Z" fill="#F59E0B" opacity="0.9"/>
+  <!-- Wrench over a spark: the two trades that carry D.I. Khan's summer. -->
+  <path d="M40 24a8 8 0 0 0-10.4 10.9L21 43.5a3.6 3.6 0 0 0 5.1 5.1l8.6-8.6A8 8 0 0 0 45.6 29.6l-4.4 4.4-4.6-1.2-1.2-4.6z"
+        fill="#fff"/>
+  <path d="M31 17l-6 10h5l-2 8 8-11h-5z" fill="#F59E0B"/>
+</svg>

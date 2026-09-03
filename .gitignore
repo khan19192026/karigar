@@ -1,0 +1,14 @@
+node_modules
+dist
+dist-ssr
+*.local
+.env
+.env.local
+.env.*.local
+.DS_Store
+.vite
+*.log
+
+# Per-machine Claude Code settings. The shared .claude/settings.json is
+# tracked; this one holds one developer's own permission allowlist.
+.claude/settings.local.json

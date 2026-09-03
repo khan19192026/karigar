@@ -1,0 +1,29 @@
+{
+  "name": "karigar-dikhan",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Karigar D.I. Khan — hyperlocal on-demand home services PWA",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "icons": "node scripts/gen-icons.mjs",
+    "test:mask": "node scripts/test-mask.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "lucide-react": "^0.454.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.27.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@vitejs/plugin-react": "^4.3.3",
+    "sharp": "^0.33.5",
+    "tailwindcss": "^4.0.0",
+    "vite": "^5.4.10",
+    "vite-plugin-pwa": "^0.20.5"
+  }
+}
